@@ -1,0 +1,120 @@
+# -*- coding: utf-8 -*-
+
+"""
+Sistema de Estacionamento
+
+Este programa permite o cadastro de veículos em um estacionamento
+utilizando um menu interativo.
+
+Funcionalidades:
+1 - Estacionar veículo
+2 - Retirar veículo
+3 - Veículos estacionados
+4 - Está estacionado?
+0 - Sair
+
+Cada veículo é identificado pela placa e possui dados como marca,
+modelo, cor e proprietário.
+
+Autor: Bruna Ganzala
+Data de Criação: 15 de junho de 2024
+"""
+veiculos = {}
+def estacionar_veiculo():
+    """Adiciona um veículo ao estacionamento."""
+    try:
+        placa = input("Digite a placa do veículo: ")
+        if placa in veiculos:
+            print("Erro: Veículo já está estacionado.")
+            return
+        marca = input("Digite a marca do veículo: ")
+        modelo = input("Digite o modelo do veículo: ")
+        cor = input("Digite a cor do veículo: ")
+        proprietario = input("Digite o nome do proprietário do veículo: ")
+
+        # Adiciona os dados do veículo no dicionário
+        veiculos[placa] = {
+            'marca': marca,
+            'modelo': modelo,
+            'cor': cor,
+            'proprietario': proprietario
+        }
+        print(f"Veículo com placa {placa} estacionado com sucesso!")
+    except Exception as e:
+        print(f"Erro ao estacionar veículo: {e}")
+
+def retirar_veiculo():
+    """Remove um veículo do estacionamento."""
+    try:
+        placa = input("Digite a placa do veículo a ser retirado: ")
+        if placa in veiculos:
+            del veiculos[placa]
+            print(f"Veículo com placa {placa} foi retirado do estacionamento.")
+        else:
+            print(f"Erro: Veículo com placa {placa} não está estacionado.")
+    except Exception as e:
+        print(f"Erro ao retirar veículo: {e}")
+
+def veiculos_estacionados():
+    """Exibe todos os veículos atualmente estacionados."""
+    try:
+        if veiculos:
+            print("Veículos estacionados:")
+            for placa, dados in veiculos.items():
+                print(f"Placa: {placa} - Marca: {dados['marca']} - Modelo: {dados['modelo']} - Cor: {dados['cor']} - Proprietário: {dados['proprietario']}")
+        else:
+            print("Não há veículos estacionados.")
+    except Exception as e:
+        print(f"Erro ao listar veículos: {e}")
+
+def esta_estacionado():
+    """Verifica se um veículo específico está estacionado."""
+    try:
+        placa = input("Digite a placa do veículo a verificar: ")
+        if placa in veiculos:
+            print(f"O veículo com placa {placa} está estacionado.")
+        else:
+            print(f"O veículo com placa {placa} não está estacionado.")
+    except Exception as e:
+        print(f"Erro ao verificar veículo: {e}")
+
+def menu():
+    """Exibe o menu de opções."""
+    print("\nMenu:")
+    print("1 - Estacionar veículo")
+    print("2 - Retirar veículo")
+    print("3 - Veículos estacionados")
+    print("4 - Está estacionado?")
+    print("0 - Sair")
+
+def main():
+    """Função principal que controla o fluxo do programa."""
+    # Estacionando um carro por padrão
+    veiculos_estacionados['ABC-1234'] = {
+        'marca': 'Toyota',
+        'modelo': 'Corolla',
+        'cor': 'Prata',
+        'proprietario': 'Proprietário Padrão'
+    }
+    print("Veículo padrão estacionado: Placa ABC-1234, Marca Toyota, Modelo Corolla, Cor Prata, Proprietário Proprietário Padrão")
+
+    while True:
+        menu()
+        opcao = input("Digite a opção desejada: ")
+
+        if opcao == '1':
+            estacionar_veiculo()
+        elif opcao == '2':
+            retirar_veiculo()
+        elif opcao == '3':
+            veiculos_estacionados()
+        elif opcao == '4':
+            esta_estacionado()
+        elif opcao == '0':
+            print("Encerrando o programa...")
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
+
+if __name__ == "__main__":
+    main()
